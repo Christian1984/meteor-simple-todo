@@ -10,4 +10,5 @@ This todo-list project is me refreshing my Meteor skills by loosely following al
 - Remove Meteor's template engine with `meteor remove blaze-html-templates`
 - Add the static html package with `meteor add static-html`
 - Replace starter code so that all references to Meteor's template engine is gone
+- To use mongo-db-data with react, call `meteor add react-meteor-data`
 - Start coding :-)
