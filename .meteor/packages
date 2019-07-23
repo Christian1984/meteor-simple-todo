@@ -21,3 +21,5 @@ insecure@1.0.7                # Allow all DB writes from clients (for prototypin
 static-html
 react-meteor-data
 underscore@1.0.10
+accounts-ui
+accounts-password
