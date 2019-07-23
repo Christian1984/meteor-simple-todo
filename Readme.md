@@ -1,8 +1,10 @@
 # What is this?
 
-This todo-list project is me refreshing my Meteor skills by loosely following along Meteor's todo list tutorial...
+This todo-list project is me refreshing my Meteor skills by loosely following along Meteor's todo list tutorial... (https://www.meteor.com/tutorials/react/creating-an-app)
 
 # Notes
+
+## Create New Meteor Project with React
 
 - Initialize a new Meteor project with `meteor create <name>`
 - Start the server by cd'ing into the directory and call `meteor`
@@ -12,3 +14,12 @@ This todo-list project is me refreshing my Meteor skills by loosely following al
 - Replace starter code so that all references to Meteor's template engine is gone
 - To use mongo-db-data with react, call `meteor add react-meteor-data`
 - Start coding :-)
+
+## Run as iOS App
+
+- Run `meteor install-sdk ios`
+- Run `meteor add-platform ios`
+- Run `meteor run ios`
+- If you encounter errors, follow `https://stackoverflow.com/a/17980786`
+- If you still get errors, run `meteor reset` and try again
+
