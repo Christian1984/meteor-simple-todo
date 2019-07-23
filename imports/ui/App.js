@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Task from './Task.js';
 
 export default class App extends Component {
     getTasks()
@@ -12,7 +13,7 @@ export default class App extends Component {
 
     renderTasks()
     {
-        return this.getTasks().map(task => (<li key={ task._id }>{ task.text }</li>));
+        return this.getTasks().map(task => (<Task key={ task._id } task={ task } />));
     }
 
     render() {
