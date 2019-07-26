@@ -25,6 +25,13 @@ This todo-list project is me refreshing my Meteor skills by loosely following al
 
 ## Security
 
+### Run CRUD-Operations Securely
+
 - When done with initial prototyping, remove package `insecure` with `meteor remove insecure`
 - Use `Meteor.methods()` to define methods that the client can call via `Meteor.call()` to modify the db savely.
+
+### Limit Clients' Access to the Database
+
+- To prevent meteor from publishing ALL data in the database to ALL clients, autopublish must be turned off. Do this with `meteor remove autopublish`
+- Use `Meteor.publish()`on the server and `Meteor.subscribe()`on the client to limit clients' access to just the data they actually need to have access to.
 

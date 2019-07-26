@@ -4,6 +4,12 @@ import { check } from 'meteor/check';
 
 export const Tasks = new Mongo.Collection('tasks');
 
+//publish db to clients (after removing autopublish)
+if (Meteor.isServer) {
+    Meteor.publish('tasks', () => Tasks.find());
+}
+
+//methods for CRUD operations
 Meteor.methods({
     'tasks.insert'(text) {
         check(text, String);

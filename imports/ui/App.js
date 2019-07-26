@@ -78,6 +78,9 @@ class App extends Component {
 }
 
 export default withTracker(() => {
+    //subscribe to publication tasks
+    Meteor.subscribe('tasks');
+
     return {
         tasks: Tasks.find({}, { sort: { createdAt: -1 } }).fetch(),
         incompleteCount: Tasks.find({ checked: {$ne: true} }).count(),
