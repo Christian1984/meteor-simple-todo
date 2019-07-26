@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { Tasks } from '../api/tasks.js';
+import { Meteor } from 'meteor/meteor';
 
 export default class Task extends Component {
     deleteItem() {
-        Tasks.remove(this.props.task._id);
+        //Tasks.remove(this.props.task._id);
+        Meteor.call('tasks.remove', this.props.task._id);
     }
 
     toggleCheckbox(e) {
-        Tasks.update(this.props.task._id, { 
+        /*Tasks.update(this.props.task._id, { 
             $set: { checked: !this.props.task.checked }
-        });
+        });*/
+        Meteor.call('tasks.update', this.props.task._id, !this.props.task.checked);
     }
 
     render() {
@@ -21,7 +24,7 @@ export default class Task extends Component {
                 <input 
                     type="checkbox"
                     readOnly
-                    checked={ !!this.props.task.checked }
+                    checked={ checked }
                     onClick={ this.toggleCheckbox.bind(this) }
                 />
                 <span className="text">{ this.props.task.text } <i>({ this.props.task.username })</i></span>
