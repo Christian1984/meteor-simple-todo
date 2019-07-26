@@ -12,7 +12,23 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-        //TODO
+        //from tutorial
+        /*let newTask = {
+            text,
+            owner: this.userId,
+            username: Meteor.users.findOne(this.userId).username,
+            createdAt: new Date()
+        };*/
+
+        //seems to work fine as well
+        let newTask = {
+            text,
+            owner: Meteor.userId(),
+            username: Meteor.user().username,
+            createdAt: new Date()
+        };
+
+        Tasks.insert(newTask);
     },
     'tasks.remove'(taskId) {
         check(taskId, String);
@@ -21,7 +37,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-        //TODO
+        Tasks.remove(taskId);
     },
     'tasks.update'(taskId, setChecked) {
         check(taskId, String);
@@ -31,6 +47,8 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-        //TODO
+        Tasks.update(taskId, { 
+            $set: { checked: setChecked }
+        });
     }
 });

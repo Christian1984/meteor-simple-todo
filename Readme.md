@@ -23,3 +23,8 @@ This todo-list project is me refreshing my Meteor skills by loosely following al
 - If you encounter errors, follow `https://stackoverflow.com/a/17980786`
 - If you still get errors, run `meteor reset` and try again
 
+## Security
+
+- When done with initial prototyping, remove package `insecure` with `meteor remove insecure`
+- Use `Meteor.methods()` to define methods that the client can call via `Meteor.call()` to modify the db savely.
+
