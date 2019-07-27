@@ -6,7 +6,12 @@ export const Tasks = new Mongo.Collection('tasks');
 
 //publish db to clients (after removing autopublish)
 if (Meteor.isServer) {
-    Meteor.publish('tasks', () => Tasks.find());
+    Meteor.publish('tasks', () => Tasks.find({ 
+        $or: [
+            { isPrivate: { $ne: true } },
+            { owner: Meteor.userId() }
+        ] 
+    }));
 }
 
 //methods for CRUD operations
@@ -18,19 +23,12 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-        //from tutorial
-        /*let newTask = {
-            text,
-            owner: this.userId,
-            username: Meteor.users.findOne(this.userId).username,
-            createdAt: new Date()
-        };*/
-
         //seems to work fine as well
         let newTask = {
             text,
             owner: Meteor.userId(),
             username: Meteor.user().username,
+            isPrivate: true,
             createdAt: new Date()
         };
 
@@ -55,6 +53,19 @@ Meteor.methods({
 
         Tasks.update(taskId, { 
             $set: { checked: setChecked }
+        });
+    },
+    'tasks.togglePrivate'(taskId, setPrivate) {
+        check(taskId, String);
+        check(setPrivate, Boolean);
+
+        //TODO: throw if not owned by user
+        if (!this.userId) {
+            throw new Meteor.Error('not-authorized');
+        }
+
+        Tasks.update(taskId, { 
+            $set: { isPrivate: setPrivate }
         });
     }
 });

@@ -98,18 +98,19 @@ li.checked .text {
     text-decoration: line-through;
 }
    
-/*li.private {
+li.private {
     background: #eee;
     border-color: #ddd;
-}*/
+}
    
 header .hide-completed {
     float: right;
 }
    
-/*.toggle-private {
+.toggle-private {
+    float: right;
     margin-left: 5px;
-}*/
+}
    
 /*@media (max-width: 600px) {
     li {
