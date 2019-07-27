@@ -4,13 +4,16 @@ import { check } from 'meteor/check';
 
 export const Tasks = new Mongo.Collection('tasks');
 
+//TODO: use either this.userId or Meteor.userId(), but don't mix
+
 //publish db to clients (after removing autopublish)
 if (Meteor.isServer) {
+    //publish only tasks that are either not private OR that are used by the logged in user
     Meteor.publish('tasks', () => Tasks.find({ 
         $or: [
             { isPrivate: { $ne: true } },
             { owner: Meteor.userId() }
-        ] 
+        ]
     }));
 }
 
@@ -19,11 +22,11 @@ Meteor.methods({
     'tasks.insert'(text) {
         check(text, String);
 
+        //only logged in users may create tasks
         if (!this.userId) {
             throw new Meteor.Error('not-authorized');
         }
 
-        //seems to work fine as well
         let newTask = {
             text,
             owner: Meteor.userId(),
@@ -37,7 +40,10 @@ Meteor.methods({
     'tasks.remove'(taskId) {
         check(taskId, String);
 
-        if (!this.userId) {
+        let task = Tasks.findOne(taskId);
+
+        //a task should only be removed by the owner
+        if (task.owner != Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
 
@@ -47,7 +53,10 @@ Meteor.methods({
         check(taskId, String);
         check(setChecked, Boolean);
 
-        if (!this.userId) {
+        let task = Tasks.findOne(taskId);
+
+        //private tasks may only be updated by owners, other tasks only by logged in users
+        if (!this.userId || (task.owner != Meteor.userId() && task.isPrivate)) {
             throw new Meteor.Error('not-authorized');
         }
 
@@ -59,8 +68,9 @@ Meteor.methods({
         check(taskId, String);
         check(setPrivate, Boolean);
 
-        //TODO: throw if not owned by user
-        if (!this.userId) {
+        let task = Tasks.findOne(taskId);
+
+        if (task.owner != Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
 

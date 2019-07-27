@@ -21,8 +21,8 @@ export default class Task extends Component {
 
         return (
             <li className={ (checked ? "checked" : "") + " " + (isPrivate ? "private" : "") }>
-                <button className="delete" onClick={ this.deleteItem.bind(this) }>&times;</button>
-                { Meteor.userId() == this.props.task.owner ? <button className="toggle-private" onClick={ this.togglePrivate.bind(this) }>{ isPrivate ? "private" : "public" }</button> : "" }
+                { Meteor.userId() == this.props.task.owner ? <button className="delete" onClick={ this.deleteItem.bind(this) }>&times;</button> : "" }
+                { Meteor.userId() == this.props.task.owner ? <button className="toggle-private" onClick={ this.togglePrivate.bind(this) }>{ isPrivate ? "Private" : "Public" }</button> : "" }
                 <input 
                     type="checkbox"
                     readOnly
