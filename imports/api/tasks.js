@@ -29,8 +29,9 @@ Meteor.methods({
 
         let newTask = {
             text,
-            owner: Meteor.userId(),
-            username: Meteor.user().username,
+            owner: this.userId,
+            username: Meteor.user().username, //may fail during tests
+            //username: Meteor.users.findOne(this.userId).username, //from tutorial
             isPrivate: true,
             createdAt: new Date()
         };
@@ -43,7 +44,7 @@ Meteor.methods({
         let task = Tasks.findOne(taskId);
 
         //a task should only be removed by the owner
-        if (task.owner != Meteor.userId()) {
+        if (task.owner != this.userId) {
             throw new Meteor.Error('not-authorized');
         }
 
@@ -56,7 +57,7 @@ Meteor.methods({
         let task = Tasks.findOne(taskId);
 
         //private tasks may only be updated by owners, other tasks only by logged in users
-        if (!this.userId || (task.owner != Meteor.userId() && task.isPrivate)) {
+        if (!this.userId || (task.owner != this.userId && task.isPrivate)) {
             throw new Meteor.Error('not-authorized');
         }
 
@@ -70,7 +71,7 @@ Meteor.methods({
 
         let task = Tasks.findOne(taskId);
 
-        if (task.owner != Meteor.userId()) {
+        if (task.owner != this.userId) {
             throw new Meteor.Error('not-authorized');
         }
 
