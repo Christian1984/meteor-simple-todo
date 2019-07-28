@@ -21,3 +21,4 @@ react-meteor-data
 underscore@1.0.10
 accounts-ui
 accounts-password
+meteortesting:mocha
